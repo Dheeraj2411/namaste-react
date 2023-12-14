@@ -2,7 +2,10 @@ import React from "react";
 import ReactDOM  from "react-dom/client";
 import Header from "./Component/Header";
 import Body from "./Component/Body";
-// import ShimmerUi from "./Component/ShimmerUi";
+import About from "./Component/About";
+import Contact from "./Component/Contact";
+import Error from "./Component/Error";
+import { RouterProvider,createBrowserRouter,Outlet } from "react-router-dom";
 
 const AppLayout=()=>{
    let alertShow= false;
@@ -13,18 +16,38 @@ const AppLayout=()=>{
                
                alertShow=!alertShow
    },1000);
-   // console.log(<ShimmerUi/>)
+   
+   
    return(
       <div className="app">
          <Header/>
-         <Body/>
-         {/* <ShimmerUi/> */}
-         
+         <Outlet/>         
       </div>
-   )
+   );
 
-}
+};
+const router=createBrowserRouter([
+   {
+      path:"/",
+      element:<AppLayout/>,
+      children:[
+         {
+         path:"/",
+         element:<Body/>
+      },
+         {
+            path:"about",
+            element:<About/>,
+         },
+         ,
+         {
+            path:"/contact",
+            element:<Contact/>,
+         }],
+      errorElement:<Error/>,
+   }
+])
 
  const root = ReactDOM.createRoot(document.getElementById("root"));
- root.render(<AppLayout/>)
+ root.render(<RouterProvider router={router}/>)
 
