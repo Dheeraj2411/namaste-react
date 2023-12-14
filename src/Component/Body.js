@@ -17,12 +17,11 @@ const  Body=()=>{
        const fetchData = async()=>{
          //Swiggy APi
        const data = await fetch(
-<<<<<<< HEAD
-       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.453109&lng=77.037495&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-      //   "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.453109&lng=77.037495&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+
+       // "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.453109&lng=77.037495&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+        "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.453109&lng=77.037495&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
        )
-      (
-       "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.453109&lng=77.037495&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
+     
 
        
        const json = await data.json();
