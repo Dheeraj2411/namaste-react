@@ -1,23 +1,32 @@
 import { CDN_URL } from "../Utlis/contants";
-const ResturantCard=({resData})=>{
-  
-    // console.log(resData)
-    
-     return(
-      <div className="res-card" >
-          
-      <img className="res-logo"
-      alt="res-img"
-      src={CDN_URL+resData?.info?.cloudinaryImageId}/>
-      <h3> {resData?.info?.name}</h3>
-      <h3>{resData?.imfo?.cuisines.join(", ")}</h3>
-      <h4>{resData?.info?.locality}</h4>
-      <h3>Rating: {resData?.info?.avgRating}</h3>
-      <h3>{resData?.info?.costForTwo}</h3>
-      <h3>DeliveryTime:{resData?.info?.sla?.deliveryTime}</h3>
-     
-     </div>
-     )
-  }
+const ResturantCard = (props) => {
+  const { resData } = props;
+
+  const {
+    name,
+    cuisines,
+    locality,
+    costForTwo,
+    avgRating,
+    sla,
+    cloudinaryImageId,
+  } = resData?.info;
+  return (
+    <div className="res-card">
+      <img
+        className="res-logo"
+        alt="res-img"
+        src={CDN_URL + cloudinaryImageId}
+      />
+      <h3> {name}</h3>
+      <h4>{cuisines.join(", ")}</h4>
+      <h4>🌏{locality}</h4>
+      <h3>{costForTwo}</h3>
+      <h3>
+        ⭐{avgRating} ⏱️{sla?.deliveryTime}mins
+      </h3>
+    </div>
+  );
+};
 
   export default ResturantCard;
