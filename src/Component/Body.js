@@ -14,10 +14,21 @@ const Body = () => {
     fetchData();
   }, []);
 
+<<<<<<< HEAD
   const fetchData = async () => {
     //Swiggy APi
     const data = await fetch(
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.453109&lng=77.037495&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+=======
+       const fetchData = async()=>{
+         //Swiggy APi
+       const data = await fetch(
+
+       // "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.453109&lng=77.037495&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+        "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.453109&lng=77.037495&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+       )
+     
+>>>>>>> d011da0435a8a073765efb9e06696743ac543592
 
       // "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.453109&lng=77.037495&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
