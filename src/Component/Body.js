@@ -26,8 +26,8 @@ const  Body=()=>{
        
        const json = await data.json();
       // optinoal chaining
-       setresturantData(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
-       setFilterData(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+       setresturantData(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+       setFilterData(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
 
        }
     
