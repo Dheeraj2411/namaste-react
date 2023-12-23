@@ -2,6 +2,7 @@ import ResturantCard from "./ResturantCard";
 import { useState, useEffect } from "react";
 import ShimmerUi from "./ShimmerUi";
 import { Link } from "react-router-dom";
+import { resData_API } from "../Utlis/contants";
 
 const Body = () => {
   //  State variable
@@ -10,36 +11,34 @@ const Body = () => {
   const [filterData, setFilterData] = useState(""); // state Variable of filter Data and initial Data of UI
 
   // <---whenever the state variable  update . react trigger reconcilation cycle(re-render component)
+
   useEffect(() => {
     fetchData();
   }, []);
 
-<<<<<<< HEAD
   const fetchData = async () => {
-    //Swiggy APi
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.453109&lng=77.037495&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-=======
-       const fetchData = async()=>{
-         //Swiggy APi
-       const data = await fetch(
-
-       // "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.453109&lng=77.037495&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-        "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.453109&lng=77.037495&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-       )
-     
->>>>>>> d011da0435a8a073765efb9e06696743ac543592
-
-      // "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.453109&lng=77.037495&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    );
-
+    const data = await fetch(resData_API);
     const json = await data.json();
+    console.log(json);
     // optinoal chaining
     setresturantData(
-      json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants ||
+        json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
     );
+
     setFilterData(
-      json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants ||
+        json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+    );
+    console.log(
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants ||
+        json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
     );
   };
 

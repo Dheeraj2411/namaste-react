@@ -87,3 +87,7 @@
 .filter-btn{
     cursor: pointer;
 }
+.user-card {
+    height: 52px;
+    background-color: aqua;
+}
