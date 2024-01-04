@@ -5,10 +5,10 @@ export const LOGO_URL="https://imgs.search.brave.com/uOwUtQ-Fn7xcJBQXBJiIDVB-5uC
 export const restaurantsMenu_APi =
   "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=28.453109&lng=77.037495&restaurantId=";
 
-export const resData_API =
-  "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.453109&lng=77.037495&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING";
-
 // export const resData_API =
-//   "https://corsproxy.org/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.453109&lng=77.037495&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING";
+//   "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.453109&lng=77.037495&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING";
+
+export const resData_API =
+  "https://corsproxy.org/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.453109&lng=77.037495&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING";
 export const menuImage_URL =
   "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_1024/";
