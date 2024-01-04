@@ -1,13 +1,14 @@
-import React from "react";
+import React,{lazy,Suspense} from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./Component/Header";
 import Body from "./Component/Body";
-import About from "./Component/About";
 import Contact from "./Component/Contact";
 import Error from "./Component/Error";
 import RestaurantMenu from "./Component/RestaurentMenu";
 import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 
+const Grocery =lazy(()=>import("./Component/Grocery"))
+const About =lazy(()=>import("./Component/About"))
 const AppLayout = () => {
   let alertShow = false;
   setInterval(() => {
@@ -15,7 +16,7 @@ const AppLayout = () => {
 
     alertShow = !alertShow;
   }, 1000);
-  // console.log(<RestaurantMenu/>)
+  
   return (
     <div className="app">
       <Header />
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <About />,
+        element: (<Suspense fallback={<h3>Loading</h3>}> <About /></Suspense>),
       },
       ,
       {
@@ -42,8 +43,13 @@ const router = createBrowserRouter([
         element: <Contact />,
       },
       {
-        path: "/restaurants/:resId",
+        path: "/grocery",
+        element:(<Suspense fallback={<h3>Loading</h3>}> <Grocery /></Suspense>),
+      },
+      {
+        path: "/restaurants/:resId",  
         element: <RestaurantMenu />,
+        
       },
     ],
     errorElement: <Error />,

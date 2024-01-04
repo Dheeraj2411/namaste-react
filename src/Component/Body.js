@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import ShimmerUi from "./ShimmerUi";
 import { Link } from "react-router-dom";
 import { resData_API } from "../Utlis/contants";
+import useOnlineStatus from "../Utlis/useOnlineStatus";
 
 const Body = () => {
   //  State variable
@@ -22,35 +23,35 @@ const Body = () => {
     console.log(json);
     // optinoal chaining
     setresturantData(
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+      json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants ||
-        json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle
+        json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
           ?.restaurants
     );
 
     setFilterData(
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+      json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants ||
-        json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants
-    );
-    console.log(
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants ||
-        json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle
+        json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
           ?.restaurants
     );
   };
+  console.log(<ShimmerUi/>)
+  const onlineStatus = useOnlineStatus();
+  if (onlineStatus === false)
+    return <h2>looks like you're offline!! check your internet connection</h2>;
 
+    console.log(resturantData.length)
   return resturantData.length === 0 ? (
     <ShimmerUi />
   ) : (
-    <div className="body">
-      <div className="filter">
+    <>
+      <div className=" w-full flex flex-row justify-evenly bg-slate-400   shadow-lg p-2   ">
+      <div className="justify-center flex-grow mx-2 px-2">
         <input
           type="text"
           // Search the text
-          className="btn-input"
+          className=" w-[12rem] flex-shrink-1 outline-none border-2 rounded-lg"
           value={inputData}
           placeholder="Search here"
           onChange={(e) => {
@@ -58,7 +59,7 @@ const Body = () => {
           }}
         />
         <button
-          className="btn-search"
+          className=" px-1 mx-1  bg-gray-200  border-2 rounded-lg  hover:text-orange-400"
           // filter the returant cards and update the UI
 
           onClick={() => {
@@ -70,8 +71,9 @@ const Body = () => {
         >
           Search
         </button>
+        </div>
         <button
-          className="filter-btn"
+          className="  border-2 rounded-lg bg-white px-4 mx-2 hover:text-orange-400 "
           // filter Data
           onClick={() => {
             const filterData = resturantData.filter(
@@ -83,7 +85,7 @@ const Body = () => {
           Top Rated Restaurant
         </button>
       </div>
-      <div className="res-container">
+      <div className=" overflow-scroll flex  flex-wrap "> 
         {filterData.map((restutrant) => (
           <Link
             key={restutrant.info.id}
@@ -93,7 +95,7 @@ const Body = () => {
           </Link>
         ))}
       </div>
-    </div>
+   </>
   );
 };
 export default Body;
