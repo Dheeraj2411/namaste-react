@@ -1,4 +1,4 @@
-import ResturantCard from "./ResturantCard";
+import ResturantCard, { WithOffer } from "./ResturantCard";
 import { useState, useEffect } from "react";
 import ShimmerUi from "./ShimmerUi";
 import { Link } from "react-router-dom";
@@ -11,6 +11,7 @@ const Body = () => {
   const [inputData, setInputData] = useState(""); //state variable of input data
   const [filterData, setFilterData] = useState(""); // state Variable of filter Data and initial Data of UI
 
+  const ResturantCardWithOffer = WithOffer(ResturantCard);
   // <---whenever the state variable  update . react trigger reconcilation cycle(re-render component)
 
   useEffect(() => {
@@ -36,44 +37,47 @@ const Body = () => {
           ?.restaurants
     );
   };
-  console.log(<ShimmerUi/>)
+  // console.log(filterData);
+  // console.log(resturantData)
   const onlineStatus = useOnlineStatus();
   if (onlineStatus === false)
     return <h2>looks like you're offline!! check your internet connection</h2>;
 
-    console.log(resturantData.length)
+  // console.log(resturantData.length);
   return resturantData.length === 0 ? (
     <ShimmerUi />
   ) : (
     <>
-      <div className=" w-full flex flex-row justify-evenly bg-slate-400   shadow-lg p-2   ">
-      <div className="justify-center flex-grow mx-2 px-2">
-        <input
-          type="text"
-          // Search the text
-          className=" w-[12rem] flex-shrink-1 outline-none border-2 rounded-lg"
-          value={inputData}
-          placeholder="Search here"
-          onChange={(e) => {
-            setInputData(e.target.value);
-          }}
-        />
-        <button
-          className=" px-1 mx-1  bg-gray-200  border-2 rounded-lg  hover:text-orange-400"
-          // filter the returant cards and update the UI
+      <div className="  flex flex-row justify-evenly bg-slate-100  flex-nowrap  shadow-lg py-2   ">
+        <div className="  flex">
+          <input
+            type="text"
+            // Search the text
 
-          onClick={() => {
-            const filter = resturantData.filter((res) =>
-              res?.info?.name?.toLowerCase().includes(inputData.toLowerCase())
-            );
-            setFilterData(filter);
-          }}
-        >
-          Search
-        </button>
+            className="text-center flex flex-shrink w-full outline-none border-2 rounded-lg"
+            value={inputData}
+            placeholder="Search here"
+            onChange={(e) => {
+              setInputData(e.target.value);
+            }}
+          />
+          <button
+            className=" px-1 mx-1  bg-gray-200  border-2 rounded-lg  hover:text-orange-400"
+            // filter the returant cards and update the UI
+
+            onClick={() => {
+              const filter = resturantData.filter((res) =>
+                res?.info?.name?.toLowerCase().includes(inputData.toLowerCase())
+              );
+
+              setFilterData(filter);
+            }}
+          >
+            Search
+          </button>
         </div>
         <button
-          className="  border-2 rounded-lg bg-white px-4 mx-2 hover:text-orange-400 "
+          className="  border-2 rounded-md px-2 bg-white  hover:text-orange-400 "
           // filter Data
           onClick={() => {
             const filterData = resturantData.filter(
@@ -85,17 +89,21 @@ const Body = () => {
           Top Rated Restaurant
         </button>
       </div>
-      <div className=" overflow-scroll flex  flex-wrap "> 
+      <div className=" flex justify-center flex-wrap ">
         {filterData.map((restutrant) => (
           <Link
             key={restutrant.info.id}
             to={"/restaurants/" + restutrant.info.id}
           >
-            <ResturantCard resData={restutrant} />
+            {restutrant.info.aggregatedDiscountInfoV3 === "" ? (
+              <ResturantCard resData={restutrant} />
+            ) : (
+              <ResturantCardWithOffer resData={restutrant} />
+            )}
           </Link>
         ))}
       </div>
-   </>
+    </>
   );
 };
 export default Body;
