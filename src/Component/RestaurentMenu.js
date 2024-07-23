@@ -3,23 +3,23 @@ import { useParams } from "react-router-dom";
 import useResturantMenu from "../Utlis/useResturantMenu";
 import ResturantDetail from "./ResturantDetail";
 import ResturantMenuList from "./ResturantMenuList";
-// import NestedItemCategory from "./NestedCategoriesItem";
-// import Accordion from "./Accordion";
+;
 
 const RestaurantMenu = () => {
   const { resId } = useParams();
   const resInfo = useResturantMenu(resId);
   // console.log(resInfo.info)
-  console.log(resInfo);
+  // console.log(resInfo);
   return !resInfo ? (
     <ShimmerUi />
   ) : (
-    <div className=" w-full">
-      <div className="  max-w-2xl max-h-full mx-auto  py-4 rounded-lg">
+    <div className="bg-slate-400 ">
+      <div className="   max-h-full mx-auto w-7/12 py-4 rounded-lg">
+        {/* resturant Detail */}
         <ResturantDetail {...resInfo.info} />
+        {/* Menu of resturant */}
         <ResturantMenuList menu={resInfo.menu} />
-        {/* <NestedItemCategory /> */}
-        {/* <Accordion menu={resInfo.menu} />  */}
+      
       </div>
     </div>
   );

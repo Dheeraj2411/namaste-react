@@ -12,9 +12,10 @@ const useResturantMenu = (resId) => {
       // live Data
       const response = await fetch(restaurantsMenu_APi + resId);
       const res_Data = await response.json();
-      // console.log(res_Data)
+
+      console.log(res_Data);
       const menuItemsList =
-        res_Data.data.cards[2]["groupedCard"].cardGroupMap.REGULAR.cards;
+        res_Data.data.cards[4]["groupedCard"].cardGroupMap.REGULAR.cards;
       const itemCategory =
         "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory";
       const NestedItemCategory =
@@ -38,7 +39,7 @@ const useResturantMenu = (resId) => {
     } catch (error) {
       console.log(error);
     }
-  }
-  return resInfo   
-}
+  };
+  return resInfo;
+};
 export default useResturantMenu;

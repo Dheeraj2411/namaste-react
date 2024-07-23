@@ -1,13 +1,28 @@
-import NestedItem from "./NestedItem";
+import NestedCategoryItem from "./NestedCategoryItem";
+import CategoryItem from "./CategoryItem";
+import { useState } from "react";
 
 const ResturantMenuList = ({ menu }) => {
-  console.log(menu);
+  const [showIndex, setShowIndex] = useState(null);
+  // const [count, setCount] = useState(0);
 
   return (
-    <div className=" flex justify-center md:font-bold  py-3 shadow-md rounded  ">
-      {menu.map((item) => {
-        // item.categories
-        <NestedItem nestedCategory={item} />;
+    <div className="">
+      {menu.map((item, index) => {
+        return (
+          <div className="flex mx-auto justify-center " key={index}>
+            {item.categories ? (
+              <NestedCategoryItem nestedItem={item} borderBottom="border-b-8" />
+            ) : (
+              <CategoryItem
+                item={item}
+                isOpen={index === showIndex ? true : false}
+                setShowIndex={() => setShowIndex(index)}
+                borderBottom="border-b-8"
+              />
+            )}
+          </div>
+        );
       })}
     </div>
   );

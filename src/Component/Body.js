@@ -1,16 +1,17 @@
 import ResturantCard, { WithOffer } from "./ResturantCard";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import ShimmerUi from "./ShimmerUi";
 import { Link } from "react-router-dom";
 import { resData_API } from "../Utlis/contants";
 import useOnlineStatus from "../Utlis/useOnlineStatus";
+import MyContext from "../Utlis/UserContext";
 
 const Body = () => {
   //  State variable
   const [resturantData, setresturantData] = useState([]); //Main content of Api
   const [inputData, setInputData] = useState(""); //state variable of input data
   const [filterData, setFilterData] = useState(""); // state Variable of filter Data and initial Data of UI
-
+  const { loggedInUser, setGitData } = useContext(MyContext);
   const ResturantCardWithOffer = WithOffer(ResturantCard);
   // <---whenever the state variable  update . react trigger reconcilation cycle(re-render component)
 
@@ -19,23 +20,27 @@ const Body = () => {
   }, []);
 
   const fetchData = async () => {
-    const data = await fetch(resData_API);
-    const json = await data.json();
-    console.log(json);
-    // optinoal chaining
-    setresturantData(
-      json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants ||
-        json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants
-    );
+    try {
+      const data = await fetch(resData_API);
+      const json = await data.json();
 
-    setFilterData(
-      json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants ||
-        json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants
-    );
+      // optinoal chaining
+      setresturantData(
+        json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants ||
+          json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+            ?.restaurants
+      );
+
+      setFilterData(
+        json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants ||
+          json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+            ?.restaurants
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
   // console.log(filterData);
   // console.log(resturantData)
@@ -52,6 +57,7 @@ const Body = () => {
         <div className="  flex">
           <input
             type="text"
+            data-testid="searchInput"
             // Search the text
 
             className="text-center flex flex-shrink w-full outline-none border-2 rounded-lg"
@@ -64,7 +70,7 @@ const Body = () => {
           <button
             className=" px-1 mx-1  bg-gray-200  border-2 rounded-lg  hover:text-orange-400"
             // filter the returant cards and update the UI
-
+            data-testid="searchBtn"
             onClick={() => {
               const filter = resturantData.filter((res) =>
                 res?.info?.name?.toLowerCase().includes(inputData.toLowerCase())
@@ -88,17 +94,31 @@ const Body = () => {
         >
           Top Rated Restaurant
         </button>
+        <div className="">
+          <label>
+            Input:
+            <input
+              className="text-center"
+              type="text"
+              value={loggedInUser}
+              onChange={(e) => {
+                setGitData(e.target.value);
+              }}
+            />
+          </label>
+        </div>
       </div>
+
       <div className=" flex justify-center flex-wrap ">
         {filterData.map((restutrant) => (
           <Link
-            key={restutrant.info.id}
-            to={"/restaurants/" + restutrant.info.id}
+            key={restutrant?.info.id}
+            to={"/restaurants/" + restutrant?.info?.id}
           >
-            {restutrant.info.aggregatedDiscountInfoV3 === "" ? (
-              <ResturantCard resData={restutrant} />
-            ) : (
+            {restutrant?.info?.aggregatedDiscountInfoV3?.header ? (
               <ResturantCardWithOffer resData={restutrant} />
+            ) : (
+              <ResturantCard resData={restutrant} />
             )}
           </Link>
         ))}
